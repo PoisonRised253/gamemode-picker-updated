@@ -133,7 +133,7 @@ $execute {
 	});
 	BindManager::get()->registerBindable({
 		"back"_spr,
-		"Nope.",
+		"Reverse",
 		"Reverse",
 		{ Keybind::create(KEY_F) },
 		Category::PLAY

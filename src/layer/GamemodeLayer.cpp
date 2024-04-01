@@ -57,6 +57,10 @@ bool GamemodeLayer::setup(std::string const& value) {
     m_selectMenu->setLayout(AxisLayout::create(Axis::Row)->setGap(5));
 
     auto onSpeed = menu_selector(GamemodeLayer::onSpeed);
+    m_minusBtn = CCMenuItemToggler::create(CCSprite::createWithSpriteFrameName("halfOff.png"_spr), CCSprite::createWithSpriteFrameName("halfOn.png"_spr), this, onSpeed);
+    m_minusBtn->setTag(-2);
+    m_zeroBtn = CCMenuItemToggler::create(CCSprite::createWithSpriteFrameName("halfOff.png"_spr), CCSprite::createWithSpriteFrameName("halfOn.png"_spr), this, onSpeed);
+    m_zeroBtn->setTag(-1);
     m_halfBtn = CCMenuItemToggler::create(CCSprite::createWithSpriteFrameName("halfOff.png"_spr), CCSprite::createWithSpriteFrameName("halfOn.png"_spr), this, onSpeed);
     m_halfBtn->setTag(0);
     m_normalBtn = CCMenuItemToggler::create(CCSprite::createWithSpriteFrameName("normalOff.png"_spr), CCSprite::createWithSpriteFrameName("normalOn.png"_spr), this, onSpeed);
@@ -67,6 +71,10 @@ bool GamemodeLayer::setup(std::string const& value) {
     m_threeBtn->setTag(3);
     m_fourBtn = CCMenuItemToggler::create(CCSprite::createWithSpriteFrameName("fourOff.png"_spr), CCSprite::createWithSpriteFrameName("fourOn.png"_spr), this, onSpeed);
     m_fourBtn->setTag(4);
+    m_fiveBtn = CCMenuItemToggler::create(CCSprite::createWithSpriteFrameName("fourOff.png"_spr), CCSprite::createWithSpriteFrameName("fourOn.png"_spr), this, onSpeed);
+    m_fiveBtn->setTag(5);
+    m_tenBtn = CCMenuItemToggler::create(CCSprite::createWithSpriteFrameName("fourOff.png"_spr), CCSprite::createWithSpriteFrameName("fourOn.png"_spr), this, onSpeed);
+    m_tenBtn->setTag(6);
 
     m_speedMenu->addChild(m_halfBtn);
     m_speedMenu->addChild(m_normalBtn);
@@ -115,11 +123,15 @@ bool GamemodeLayer::setup(std::string const& value) {
     m_robotBtn->setID("robot-button");
     m_spiderBtn->setID("spider-button");
     m_swingBtn->setID("swing-button");
+    m_minusBtn->setID("minus-speed-button");
+    m_zeroBtn->setID("zero-speed-button");
     m_halfBtn->setID("half-speed-button");
     m_normalBtn->setID("normal-speed-button");
     m_doubleBtn->setID("2x-speed-button");
     m_threeBtn->setID("3x-speed-button");
     m_fourBtn->setID("4x-speed-button");
+    m_fiveBtn->setID("5x-speed-button");
+    m_tenBtn->setID("10x-speed-button");
     sizeBtn->setID("size-toggle-button");
     platBtn->setID("platformer-toggle-button");
     m_flipBtn->setID("gravity-toggle-button");
@@ -145,11 +157,15 @@ void GamemodeLayer::updateToggleButtons() {
     m_spiderBtn->setEnabled(!m_spiderBtn->m_toggled);
     m_swingBtn->setEnabled(!m_swingBtn->m_toggled);
 
+    m_minusBtn->setEnabled(!m_minusBtn->m_toggled);
+    m_zeroBtn->setEnabled(!m_zeroBtn->m_toggled);
     m_halfBtn->setEnabled(!m_halfBtn->m_toggled);
     m_normalBtn->setEnabled(!m_normalBtn->m_toggled);
     m_doubleBtn->setEnabled(!m_doubleBtn->m_toggled);
     m_threeBtn->setEnabled(!m_threeBtn->m_toggled);
     m_fourBtn->setEnabled(!m_fourBtn->m_toggled);
+    m_fiveBtn->setEnabled(!m_fiveBtn->m_toggled);
+    m_tenBtn->setEnabled(!m_tenBtn->m_toggled);
 }
 
 void GamemodeLayer::onSpeed(CCObject* sender) {
@@ -158,11 +174,15 @@ void GamemodeLayer::onSpeed(CCObject* sender) {
     auto player1 = static_cast<PlayerObjectExt*>(playLayer->m_player1);
     auto player2 = static_cast<PlayerObjectExt*>(playLayer->m_player2);
     switch(tag) {
+        case -2: player1->changePlayerSpeed(GJPlayerSpeed::Minus); break;
+        case -1: player1->changePlayerSpeed(GJPlayerSpeed::Zero); break;
         case 0: player1->changePlayerSpeed(GJPlayerSpeed::Half); break;
         case 1: player1->changePlayerSpeed(GJPlayerSpeed::Default); break;
         case 2: player1->changePlayerSpeed(GJPlayerSpeed::Double); break;
         case 3: player1->changePlayerSpeed(GJPlayerSpeed::Three); break;
         case 4: player1->changePlayerSpeed(GJPlayerSpeed::Four); break;
+        case 5: player1->changePlayerSpeed(GJPlayerSpeed::Five); break;
+        case 6: player1->changePlayerSpeed(GJPlayerSpeed::Ten); break;
         case 5: player1->flipGravity(!player1->m_fields->m_flipped, true); break;
         case 69: player1->doReversePlayer(true); break;
     }
@@ -220,11 +240,15 @@ void GamemodeLayer::updateButtons(PlayerObject* player1) {
     if(!player1->m_isSpider) m_spiderBtn->toggle(playerExt1->m_isSpider);
     if(!player1->m_isSwing) m_swingBtn->toggle(playerExt1->m_isSwing);
 
+    if(!playerExt1->isSpeed(GJPlayerSpeed::Minus)) m_minusBtn->toggle(playerExt1->isSpeed(GJPlayerSpeed::Minus));
+    if(!playerExt1->isSpeed(GJPlayerSpeed::Zero)) m_zeroBtn->toggle(playerExt1->isSpeed(GJPlayerSpeed::Zero));
     if(!playerExt1->isSpeed(GJPlayerSpeed::Half)) m_halfBtn->toggle(playerExt1->isSpeed(GJPlayerSpeed::Half));
     if(!playerExt1->isSpeed(GJPlayerSpeed::Default)) m_normalBtn->toggle(playerExt1->isSpeed(GJPlayerSpeed::Default));
     if(!playerExt1->isSpeed(GJPlayerSpeed::Double)) m_doubleBtn->toggle(playerExt1->isSpeed(GJPlayerSpeed::Double));
     if(!playerExt1->isSpeed(GJPlayerSpeed::Three)) m_threeBtn->toggle(playerExt1->isSpeed(GJPlayerSpeed::Three));
     if(!playerExt1->isSpeed(GJPlayerSpeed::Four)) m_fourBtn->toggle(playerExt1->isSpeed(GJPlayerSpeed::Four));
+    if(!playerExt1->isSpeed(GJPlayerSpeed::Five)) m_fiveBtn->toggle(playerExt1->isSpeed(GJPlayerSpeed::Five));
+    if(!playerExt1->isSpeed(GJPlayerSpeed::Ten)) m_tenBtn->toggle(playerExt1->isSpeed(GJPlayerSpeed::Ten));
     if(!playerExt1->m_flipped) m_flipBtn->toggle(playerExt1->m_fields->m_flipped);
     if(!playerExt1->m_isGoingLeft) m_revBtn->toggle(playerExt1->m_fields->m_isGoingLeft);
 }
@@ -242,11 +266,15 @@ void GamemodeLayer::beginButtons(PlayerObject* player1) {
     m_spiderBtn->toggle(playerExt1->m_isSpider);
     m_swingBtn->toggle(playerExt1->m_isSwing);
 
+    m_minusBtn->toggle(playerExt1->isSpeed(GJPlayerSpeed::Minus));
+    m_zeroBtn->toggle(playerExt1->isSpeed(GJPlayerSpeed::Zero));
     m_halfBtn->toggle(playerExt1->isSpeed(GJPlayerSpeed::Half));
     m_normalBtn->toggle(playerExt1->isSpeed(GJPlayerSpeed::Default));
     m_doubleBtn->toggle(playerExt1->isSpeed(GJPlayerSpeed::Double));
     m_threeBtn->toggle(playerExt1->isSpeed(GJPlayerSpeed::Three));
     m_fourBtn->toggle(playerExt1->isSpeed(GJPlayerSpeed::Four));
+    m_fiveBtn->toggle(playerExt1->isSpeed(GJPlayerSpeed::Five));
+    m_tenBtn->toggle(playerExt1->isSpeed(GJPlayerSpeed::Ten));
     m_flipBtn->toggle(playerExt1->m_fields->m_flipped);
     m_revBtn->toggle(playerExt1->m_fields->m_isGoingLeft);
 }

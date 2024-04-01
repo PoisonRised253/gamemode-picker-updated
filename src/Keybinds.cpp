@@ -55,6 +55,9 @@ struct $modify(UILayer) {
             this->defineKeybind("grav"_spr, [this] {
                 Helper::changeToggle(1);
             });
+            this->defineKeybind("back"_spr, [this] {
+                Helper::changeToggle(69);
+            });
 
             //speeds
             this->defineKeybind("half"_spr, [this] {

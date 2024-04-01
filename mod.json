@@ -5,12 +5,11 @@
 		"android": "2.205",
 		"mac": "2.200"
 	},
-	"version": "v1.0.5",
-	"id": "capeling.gamemode_picker",
-	"name": "Gamemode Swapper",
-	"developer": "Capeling",
+	"version": "v2.0.0",
+	"id": "Capeling.gamemode_picker",
+	"name": "Gamemode Swapper V2",
+	"developer": "Capeling & PoisonRised253",
 	"description": "Adds a button in the Pause Menu that allows you to change your gamemode!",
-	"repository": "https://github.com/Capeling/gamemode-picker",
 	"tags": [
 		"gameplay"
 	],

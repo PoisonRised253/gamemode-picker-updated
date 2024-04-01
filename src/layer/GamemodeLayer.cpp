@@ -83,10 +83,13 @@ bool GamemodeLayer::setup(std::string const& value) {
     sizeBtn->toggle(static_cast<PlayerObjectExt*>(player1)->m_fields->m_scale);
     m_flipBtn = CCMenuItemToggler::create(CCSprite::createWithSpriteFrameName("gravOff.png"_spr), CCSprite::createWithSpriteFrameName("gravOn.png"_spr), this, onSpeed);
     m_flipBtn->setTag(5);
+    m_revBtn = CCMenuItemToggler::create(CCSprite::createWithSpriteFrameName("big.png"_spr), CCSprite::createWithSpriteFrameName("small.png"_spr), this, onSpeed);
+    m_revBtn->setTag(69);
 
     m_togglesMenu->addChild(platBtn);
     m_togglesMenu->addChild(sizeBtn);
     m_togglesMenu->addChild(m_flipBtn);
+    m_togglesMenu->addChild(m_revBtn);
     m_togglesMenu->setLayout(AxisLayout::create(Axis::Row)->setGap(6));
 
     beginButtons(player1);
@@ -120,6 +123,7 @@ bool GamemodeLayer::setup(std::string const& value) {
     sizeBtn->setID("size-toggle-button");
     platBtn->setID("platformer-toggle-button");
     m_flipBtn->setID("gravity-toggle-button");
+    m_revBtn->setID("reverse-toggle-button");
     m_mainLayer->setID("main-layer");
     m_buttonMenu->setID("close-button-menu");
     m_closeBtn->setID("close-button");
@@ -160,6 +164,7 @@ void GamemodeLayer::onSpeed(CCObject* sender) {
         case 3: player1->changePlayerSpeed(GJPlayerSpeed::Three); break;
         case 4: player1->changePlayerSpeed(GJPlayerSpeed::Four); break;
         case 5: player1->flipGravity(!player1->m_fields->m_flipped, true); break;
+        case 69: player1->doReversePlayer(true); break;
     }
     updateButtons(player1);
     updateToggleButtons();
@@ -221,6 +226,7 @@ void GamemodeLayer::updateButtons(PlayerObject* player1) {
     if(!playerExt1->isSpeed(GJPlayerSpeed::Three)) m_threeBtn->toggle(playerExt1->isSpeed(GJPlayerSpeed::Three));
     if(!playerExt1->isSpeed(GJPlayerSpeed::Four)) m_fourBtn->toggle(playerExt1->isSpeed(GJPlayerSpeed::Four));
     if(!playerExt1->m_flipped) m_flipBtn->toggle(playerExt1->m_fields->m_flipped);
+    if(!playerExt1->m_isGoingLeft) m_revBtn->toggle(playerExt1->m_fields->m_isGoingLeft);
 }
 
 void GamemodeLayer::beginButtons(PlayerObject* player1) {
@@ -242,6 +248,7 @@ void GamemodeLayer::beginButtons(PlayerObject* player1) {
     m_threeBtn->toggle(playerExt1->isSpeed(GJPlayerSpeed::Three));
     m_fourBtn->toggle(playerExt1->isSpeed(GJPlayerSpeed::Four));
     m_flipBtn->toggle(playerExt1->m_fields->m_flipped);
+    m_revBtn->toggle(playerExt1->m_fields->m_isGoingLeft);
 }
 
 GamemodeLayer* GamemodeLayer::create(std::string const& text) {

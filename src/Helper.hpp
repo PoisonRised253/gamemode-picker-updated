@@ -36,7 +36,7 @@ namespace Helper {
         switch(toggle) {
             case 0: player1->togglePlayerScale(!player1->m_fields->m_scale, true); break;
             case 1: player1->flipGravity(!player1->m_fields->m_flipped, true); break;
-            default: break;
+            case 69: player1->doReversePlayer(!player1->m_isGoingLeft); break;
         }
     }
     void changeSpeed(int speed) {

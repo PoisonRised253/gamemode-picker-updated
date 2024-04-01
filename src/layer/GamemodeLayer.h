@@ -25,6 +25,7 @@ protected:
     CCMenuItemToggler* m_threeBtn;
     CCMenuItemToggler* m_fourBtn;
     CCMenuItemToggler* m_flipBtn;
+	CCMenuItemToggler* m_revBtn;
 
 public:
     static GamemodeLayer* create(std::string const& text);

@@ -131,6 +131,13 @@ $execute {
 		{ Keybind::create(KEY_Three, Modifier::Control) },
 		Category::PLAY
 	});
+	BindManager::get()->registerBindable({
+		"back"_spr,
+		"Nope.",
+		"Reverse",
+		{ Keybind::create(KEY_F) },
+		Category::PLAY
+	});
 
 	//speeds
 	BindManager::get()->registerBindable({

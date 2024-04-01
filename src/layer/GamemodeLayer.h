@@ -19,15 +19,11 @@ protected:
     CCMenuItemToggler* m_spiderBtn;
     CCMenuItemToggler* m_swingBtn;
 
-    CCMenuItemToggler* m_minusBtn;
-    CCMenuItemToggler* m_zeroBtn;
     CCMenuItemToggler* m_halfBtn;
     CCMenuItemToggler* m_normalBtn;
     CCMenuItemToggler* m_doubleBtn;
     CCMenuItemToggler* m_threeBtn;
     CCMenuItemToggler* m_fourBtn;
-    CCMenuItemToggler* m_fiveBtn;
-    CCMenuItemToggler* m_tenBtn;
     CCMenuItemToggler* m_flipBtn;
 	CCMenuItemToggler* m_revBtn;
     
@@ -48,8 +44,6 @@ enum class GJPlayerSpeed {
     Double = 2,
     Three = 3,
     Four = 4,
-    Five = 5,
-    Ten = 10
 };
 
 class $modify(PlayerObjectExt, PlayerObject) {
@@ -78,15 +72,11 @@ class $modify(PlayerObjectExt, PlayerObject) {
     }
 
     void updateSpeedVar() {
-        if(m_playerSpeed == -1f) m_fields->m_speed = GJPlayerSpeed::Minus;
-        if(m_playerSpeed == 0.0f) m_fields->m_speed = GJPlayerSpeed::Zero;
         if(m_playerSpeed == 0.7f) m_fields->m_speed = GJPlayerSpeed::Half;
         if(m_playerSpeed == 0.9f) m_fields->m_speed = GJPlayerSpeed::Default;
         if(m_playerSpeed == 1.1f) m_fields->m_speed = GJPlayerSpeed::Double;
         if(m_playerSpeed == 1.3f) m_fields->m_speed = GJPlayerSpeed::Three;
         if(m_playerSpeed == 1.6f) m_fields->m_speed = GJPlayerSpeed::Four;
-        if(m_playerSpeed == 1.9f) m_fields->m_speed = GJPlayerSpeed::Five;
-        if(m_playerSpeed == 3.4f) m_fields->m_speed = GJPlayerSpeed::Ten;
     }
 
     void changePlayerSpeed(GJPlayerSpeed speed) {
@@ -104,15 +94,11 @@ class $modify(PlayerObjectExt, PlayerObject) {
 
     float speedToFloat(GJPlayerSpeed speed) {
         switch(speed) {
-            case GJPlayerSpeed::Minus: return -1f; break;
-            case GJPlayerSpeed::Zero: return 0.0f; break;
             case GJPlayerSpeed::Half: return 0.7f; break;
             case GJPlayerSpeed::Default: return 0.9f; break;
             case GJPlayerSpeed::Double: return  1.1f; break;
             case GJPlayerSpeed::Three: return 1.3f; break;
             case GJPlayerSpeed::Four: return 1.6f; break;
-            case GJPlayerSpeed::Five: return 1.9f; break;
-            case GJPlayerSpeed::Ten: return 3.4f; break;
             default: return 0.9f;
         }
     }
